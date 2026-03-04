@@ -1,0 +1,71 @@
+Build an Expo React Native app (TypeScript) using Expo Router with a premium-feel dark UI.
+
+APP NAME: "Iron & Proverbs" (working title)
+THEME: masculine, clean, dark, minimal, high contrast.
+
+GOAL:
+A Bible-based daily discipline app for men. Show daily verse + categories + streak + saving + basic sharing.
+Use local JSON data only (no backend, no authentication, no purchases, no subscriptions, no premium gating, and NO notifications/reminders in this version).
+
+TECH REQUIREMENTS:
+- Expo + Expo Router (app directory routing)
+- TypeScript
+- AsyncStorage for local persistence (streak, saved verses, lastOpenedDate)
+- Use react-native-view-shot + expo-sharing to share a single basic verse card image
+- Keep the project runnable in Expo with minimal setup
+
+SCREENS / ROUTES:
+- (tabs)/home.tsx
+- (tabs)/categories.tsx
+- (tabs)/saved.tsx
+- (tabs)/settings.tsx
+- verse/[id].tsx (detail page)
+
+HOME SCREEN:
+- Displays "Verse of the Day" based on local device date (one verse per day)
+- Streak counter increments once per day when the user opens the app
+- Buttons: Save / Share / Next (Next shows a random verse without changing tomorrow’s daily verse)
+- Show a short "Application" line under the verse text (from JSON)
+
+CATEGORIES:
+- List category cards
+- Clicking opens a category detail view showing verses filtered by tag
+- Add a search bar to filter verses by text/reference inside categories
+
+SAVED:
+- List saved verses
+- Tap a verse to open verse/[id]
+- Allow unsaving
+
+SETTINGS:
+- About + Disclaimer only:
+  “This app provides Scripture for encouragement and is not a substitute for pastoral or professional counseling.”
+- No reminder settings and no premium references in this screen.
+
+DATA:
+Create /data/verses.json with at least 80 sample entries across categories:
+Discipline, Purpose, Self-Control, Courage, Anxiety/Fear, Anger, Leadership, Work/Provision, Patience, Faith.
+Each entry must include:
+{
+  "id": "prov-24-10",
+  "reference": "Proverbs 24:10",
+  "text": "If you faint in the day of adversity, your strength is small.",
+  "translation": "ESV",
+  "tags": ["Discipline", "Courage"],
+  "application": "Pressure reveals discipline—build strength before the fight."
+}
+
+COMPONENTS / STRUCTURE:
+- VerseCard component (Home + Verse Detail)
+- CategoryCard component
+- /lib/storage.ts helpers for AsyncStorage with clear comments
+- /lib/verseEngine.ts for selecting daily verse + random verse logic with comments
+
+UI/UX:
+- Dark background, subtle borders, premium feel
+- Consistent spacing, rounded corners, readable typography
+- Share card should look like a clean social post (verse, reference, small app name watermark)
+
+DELIVERABLE:
+Output the full code with file structure and comments so it runs immediately.
+Do NOT include any premium, subscriptions, paywalls, purchase logic, or notifications in this version.
