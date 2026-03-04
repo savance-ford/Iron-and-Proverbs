@@ -5,7 +5,7 @@ import {
   StyleSheet,
   Pressable,
   Platform,
-  ActivityIndicator,
+  Alert,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
@@ -13,6 +13,7 @@ import ViewShot from "react-native-view-shot";
 import * as Sharing from "expo-sharing";
 import { Colors } from "@/constants/colors";
 import { Verse } from "@/lib/verseEngine";
+import { ShareCard } from "@/components/ShareCard";
 
 interface VerseCardProps {
   verse: Verse;
@@ -21,6 +22,7 @@ interface VerseCardProps {
   onNext?: () => void;
   showNext?: boolean;
   isDaily?: boolean;
+  shareLabel?: string;
 }
 
 export function VerseCard({
@@ -30,7 +32,9 @@ export function VerseCard({
   onNext,
   showNext = false,
   isDaily = false,
+  shareLabel,
 }: VerseCardProps) {
+  // This ref points at the off-screen ShareCard — not the on-screen display
   const shotRef = useRef<ViewShot>(null);
 
   const handleSave = async () => {
@@ -40,6 +44,13 @@ export function VerseCard({
 
   const handleShare = async () => {
     await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    if (Platform.OS === "web") {
+      Alert.alert(
+        "Share on Mobile",
+        "Open Iron & Proverbs on your iPhone or Android to share verse images."
+      );
+      return;
+    }
     try {
       const uri = await (shotRef.current as any)?.capture?.();
       if (uri) {
@@ -60,33 +71,51 @@ export function VerseCard({
 
   return (
     <View style={styles.container}>
-      <ViewShot ref={shotRef} options={{ format: "png", quality: 1.0 }}>
-        <View style={styles.card}>
-          <View style={styles.cardHeader}>
-            <Text style={styles.translationBadge}>{verse.translation}</Text>
-            {isDaily && (
-              <View style={styles.dailyBadge}>
-                <Ionicons name="sunny" size={11} color={Colors.amber} />
-                <Text style={styles.dailyText}>DAILY</Text>
-              </View>
-            )}
-          </View>
-
-          <Text style={styles.verseText}>"{verse.text}"</Text>
-
-          <Text style={styles.reference}>— {verse.reference}</Text>
-
-          <View style={styles.divider} />
-
-          <View style={styles.applicationSection}>
-            <Text style={styles.applicationLabel}>APPLICATION</Text>
-            <Text style={styles.applicationText}>{verse.application}</Text>
-          </View>
-
-          <Text style={styles.watermark}>Iron & Proverbs</Text>
+      {/* Off-screen premium share card — native only, rendered but invisible, captured by ViewShot */}
+      {Platform.OS !== "web" && (
+        <View style={styles.offScreen} pointerEvents="none">
+          <ViewShot
+            ref={shotRef}
+            options={{ format: "png", quality: 1.0, result: "tmpfile" }}
+          >
+            <ShareCard verse={verse} label={shareLabel} />
+          </ViewShot>
         </View>
-      </ViewShot>
+      )}
 
+      {/* On-screen in-app display card */}
+      <View style={styles.card}>
+        <View style={styles.cardHeader}>
+          <Text style={styles.translationBadge}>{verse.translation}</Text>
+          {isDaily && (
+            <View style={styles.dailyBadge}>
+              <Ionicons name="sunny" size={11} color={Colors.amber} />
+              <Text style={styles.dailyText}>DAILY</Text>
+            </View>
+          )}
+        </View>
+
+        <Text style={styles.verseText}>"{verse.text}"</Text>
+
+        <Text style={styles.reference}>— {verse.reference}</Text>
+
+        <View style={styles.divider} />
+
+        <View style={styles.applicationSection}>
+          <Text style={styles.applicationLabel}>APPLICATION</Text>
+          <Text style={styles.applicationText}>{verse.application}</Text>
+        </View>
+
+        <View style={styles.tagsRow}>
+          {verse.tags.slice(0, 3).map((tag) => (
+            <View key={tag} style={styles.tag}>
+              <Text style={styles.tagText}>{tag}</Text>
+            </View>
+          ))}
+        </View>
+      </View>
+
+      {/* Action buttons */}
       <View style={styles.actions}>
         <Pressable
           style={({ pressed }) => [
@@ -102,10 +131,7 @@ export function VerseCard({
             color={isSaved ? Colors.amber : Colors.textSecondary}
           />
           <Text
-            style={[
-              styles.actionLabel,
-              isSaved && { color: Colors.amber },
-            ]}
+            style={[styles.actionLabel, isSaved && { color: Colors.amber }]}
           >
             {isSaved ? "Saved" : "Save"}
           </Text>
@@ -130,7 +156,11 @@ export function VerseCard({
             ]}
             onPress={handleNext}
           >
-            <Ionicons name="arrow-forward-circle-outline" size={20} color={Colors.textSecondary} />
+            <Ionicons
+              name="arrow-forward-circle-outline"
+              size={20}
+              color={Colors.textSecondary}
+            />
             <Text style={styles.actionLabel}>Next</Text>
           </Pressable>
         )}
@@ -142,6 +172,12 @@ export function VerseCard({
 const styles = StyleSheet.create({
   container: {
     width: "100%",
+  },
+  // Positioned far off-screen so it's laid out and rendered but never visible to the user
+  offScreen: {
+    position: "absolute",
+    left: -9999,
+    top: 0,
   },
   card: {
     backgroundColor: Colors.surface,
@@ -202,7 +238,7 @@ const styles = StyleSheet.create({
   },
   applicationSection: {
     gap: 8,
-    marginBottom: 20,
+    marginBottom: 16,
   },
   applicationLabel: {
     fontSize: 9,
@@ -216,16 +252,27 @@ const styles = StyleSheet.create({
     color: Colors.textSecondary,
     lineHeight: 22,
   },
-  watermark: {
+  tagsRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 6,
+  },
+  tag: {
+    backgroundColor: Colors.surfaceElevated,
+    borderRadius: 6,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderWidth: 1,
+    borderColor: Colors.border,
+  },
+  tagText: {
     fontSize: 10,
     fontFamily: "Inter_500Medium",
     color: Colors.textMuted,
-    letterSpacing: 1,
-    textAlign: "right",
   },
   actions: {
     flexDirection: "row",
-    marginTop: 16,
+    marginTop: 12,
     gap: 10,
   },
   actionButton: {
