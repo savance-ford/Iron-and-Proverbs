@@ -1,0 +1,698 @@
+[
+  {
+    "id": "prov-24-10",
+    "reference": "Proverbs 24:10",
+    "text": "If you faint in the day of adversity, your strength is small.",
+    "translation": "ESV",
+    "tags": ["Discipline", "Courage"],
+    "application": "Pressure reveals character—build strength before the fight arrives."
+  },
+  {
+    "id": "prov-4-23",
+    "reference": "Proverbs 4:23",
+    "text": "Keep your heart with all vigilance, for from it flow the springs of life.",
+    "translation": "ESV",
+    "tags": ["Discipline", "Self-Control"],
+    "application": "Guard what you consume mentally and spiritually—your actions flow from what you dwell on."
+  },
+  {
+    "id": "1cor-9-27",
+    "reference": "1 Corinthians 9:27",
+    "text": "But I discipline my body and keep it under control, lest after preaching to others I myself should be disqualified.",
+    "translation": "ESV",
+    "tags": ["Discipline", "Self-Control"],
+    "application": "Mastery over your body is a spiritual discipline. The man who leads others must first lead himself."
+  },
+  {
+    "id": "heb-12-11",
+    "reference": "Hebrews 12:11",
+    "text": "For the moment all discipline seems painful rather than pleasant, but later it yields the peaceful fruit of righteousness to those who have been trained by it.",
+    "translation": "ESV",
+    "tags": ["Discipline", "Patience"],
+    "application": "Embrace the pain of discipline now—it produces the harvest of righteousness later."
+  },
+  {
+    "id": "prov-12-1",
+    "reference": "Proverbs 12:1",
+    "text": "Whoever loves discipline loves knowledge, but he who hates reproof is stupid.",
+    "translation": "ESV",
+    "tags": ["Discipline", "Purpose"],
+    "application": "The man who accepts correction grows; the man who rejects it stays stuck. Love the hard truth."
+  },
+  {
+    "id": "2tim-1-7",
+    "reference": "2 Timothy 1:7",
+    "text": "For God gave us a spirit not of fear but of power and love and self-control.",
+    "translation": "ESV",
+    "tags": ["Self-Control", "Courage", "Anxiety/Fear"],
+    "application": "Fear is not your identity. You carry the Spirit of power—act like it."
+  },
+  {
+    "id": "gal-5-23",
+    "reference": "Galatians 5:23",
+    "text": "Gentleness, self-control; against such things there is no law.",
+    "translation": "ESV",
+    "tags": ["Self-Control"],
+    "application": "Self-control is a fruit of the Spirit, not just willpower. Cultivate your walk with God daily."
+  },
+  {
+    "id": "prov-16-32",
+    "reference": "Proverbs 16:32",
+    "text": "Whoever is slow to anger is better than the mighty, and he who rules his spirit than he who takes a city.",
+    "translation": "ESV",
+    "tags": ["Self-Control", "Anger"],
+    "application": "True strength is mastery of yourself—more impressive than any military victory."
+  },
+  {
+    "id": "titus-2-12",
+    "reference": "Titus 2:12",
+    "text": "Training us to renounce ungodliness and worldly passions, and to live self-controlled, upright, and godly lives in the present age.",
+    "translation": "ESV",
+    "tags": ["Self-Control", "Discipline"],
+    "application": "Grace isn't just forgiveness—it trains you to live differently. Let it shape your habits."
+  },
+  {
+    "id": "prov-25-28",
+    "reference": "Proverbs 25:28",
+    "text": "A man without self-control is like a city broken into and left without walls.",
+    "translation": "ESV",
+    "tags": ["Self-Control"],
+    "application": "Lack of self-control leaves you exposed. Rebuild your walls through consistent practice."
+  },
+  {
+    "id": "josh-1-9",
+    "reference": "Joshua 1:9",
+    "text": "Have I not commanded you? Be strong and courageous. Do not be frightened, and do not be dismayed, for the Lord your God is with you wherever you go.",
+    "translation": "ESV",
+    "tags": ["Courage", "Faith"],
+    "application": "Courage is commanded, not optional. God's presence is your foundation—advance without fear."
+  },
+  {
+    "id": "deut-31-6",
+    "reference": "Deuteronomy 31:6",
+    "text": "Be strong and courageous. Do not fear or be in dread of them, for it is the Lord your God who goes with you. He will not leave you or forsake you.",
+    "translation": "ESV",
+    "tags": ["Courage", "Faith"],
+    "application": "The antidote to fear is remembering who goes before you. You are never alone in the battle."
+  },
+  {
+    "id": "1cor-16-13",
+    "reference": "1 Corinthians 16:13",
+    "text": "Be watchful, stand firm in the faith, act like men, be strong.",
+    "translation": "ESV",
+    "tags": ["Courage", "Faith", "Discipline"],
+    "application": "Vigilance, firmness, strength—these are the marks of a man who takes his calling seriously."
+  },
+  {
+    "id": "ps-27-1",
+    "reference": "Psalm 27:1",
+    "text": "The Lord is my light and my salvation; whom shall I fear? The Lord is the stronghold of my life; of whom shall I be afraid?",
+    "translation": "ESV",
+    "tags": ["Courage", "Anxiety/Fear", "Faith"],
+    "application": "When God is your stronghold, no enemy—human or spiritual—should shake your foundation."
+  },
+  {
+    "id": "eph-6-10",
+    "reference": "Ephesians 6:10",
+    "text": "Finally, be strong in the Lord and in the strength of his might.",
+    "translation": "ESV",
+    "tags": ["Courage", "Faith"],
+    "application": "Your strength comes from a source beyond yourself. Draw on it daily through prayer and Scripture."
+  },
+  {
+    "id": "phil-4-6",
+    "reference": "Philippians 4:6",
+    "text": "Do not be anxious about anything, but in everything by prayer and supplication with thanksgiving let your requests be made known to God.",
+    "translation": "ESV",
+    "tags": ["Anxiety/Fear", "Faith"],
+    "application": "Trade anxiety for prayer. Present your burdens to God and trust His peace to stand guard."
+  },
+  {
+    "id": "1pet-5-7",
+    "reference": "1 Peter 5:7",
+    "text": "Casting all your anxieties on him, because he cares for you.",
+    "translation": "ESV",
+    "tags": ["Anxiety/Fear", "Faith"],
+    "application": "You don't have to carry the weight alone. Release it—God's care is not passive."
+  },
+  {
+    "id": "matt-6-34",
+    "reference": "Matthew 6:34",
+    "text": "Therefore do not be anxious about tomorrow, for tomorrow will be anxious for itself. Sufficient for the day is its own trouble.",
+    "translation": "ESV",
+    "tags": ["Anxiety/Fear"],
+    "application": "Stay in today. Anxiety lives in tomorrow's problems—discipline yourself to the present moment."
+  },
+  {
+    "id": "isa-41-10",
+    "reference": "Isaiah 41:10",
+    "text": "Fear not, for I am with you; be not dismayed, for I am your God; I will strengthen you, I will help you, I will uphold you with my righteous right hand.",
+    "translation": "ESV",
+    "tags": ["Anxiety/Fear", "Courage", "Faith"],
+    "application": "God does not merely encourage you—He upholds you. Stand firm on His promises."
+  },
+  {
+    "id": "ps-46-1",
+    "reference": "Psalm 46:1",
+    "text": "God is our refuge and strength, a very present help in trouble.",
+    "translation": "ESV",
+    "tags": ["Anxiety/Fear", "Faith"],
+    "application": "In your darkest moment, God is most present. Run to Him, not from the problem."
+  },
+  {
+    "id": "rom-8-28",
+    "reference": "Romans 8:28",
+    "text": "And we know that for those who love God all things work together for good, for those who are called according to his purpose.",
+    "translation": "ESV",
+    "tags": ["Purpose", "Faith"],
+    "application": "Your setbacks are not random. God is weaving your trials into something purposeful."
+  },
+  {
+    "id": "jer-29-11",
+    "reference": "Jeremiah 29:11",
+    "text": "For I know the plans I have for you, declares the Lord, plans for welfare and not for evil, to give you a future and a hope.",
+    "translation": "ESV",
+    "tags": ["Purpose", "Faith"],
+    "application": "God's plans for you are intentional and good. Stop trying to control what only He can direct."
+  },
+  {
+    "id": "eph-2-10",
+    "reference": "Ephesians 2:10",
+    "text": "For we are his workmanship, created in Christ Jesus for good works, which God prepared beforehand, that we should walk in them.",
+    "translation": "ESV",
+    "tags": ["Purpose"],
+    "application": "You were designed for specific works. Don't drift—discover and walk in what God prepared."
+  },
+  {
+    "id": "prov-19-21",
+    "reference": "Proverbs 19:21",
+    "text": "Many are the plans in the mind of a man, but it is the purpose of the Lord that will stand.",
+    "translation": "ESV",
+    "tags": ["Purpose", "Faith"],
+    "application": "Plan wisely, but hold plans loosely. Align your will with God's and watch it prevail."
+  },
+  {
+    "id": "col-3-23",
+    "reference": "Colossians 3:23",
+    "text": "Whatever you do, work heartily, as for the Lord and not for men.",
+    "translation": "ESV",
+    "tags": ["Purpose", "Work/Provision"],
+    "application": "Your audience is God—not your boss, not critics. Raise the quality of your effort accordingly."
+  },
+  {
+    "id": "prov-11-3",
+    "reference": "Proverbs 11:3",
+    "text": "The integrity of the upright guides them, but the crookedness of the treacherous destroys them.",
+    "translation": "ESV",
+    "tags": ["Purpose", "Leadership"],
+    "application": "Integrity is a compass, not just a virtue. Let it guide every decision before the stakes are high."
+  },
+  {
+    "id": "eph-4-26",
+    "reference": "Ephesians 4:26",
+    "text": "Be angry and do not sin; do not let the sun go down on your anger.",
+    "translation": "ESV",
+    "tags": ["Anger", "Self-Control"],
+    "application": "Anger itself isn't sin—mishandled anger is. Deal with it today; don't let it fester."
+  },
+  {
+    "id": "jas-1-19",
+    "reference": "James 1:19",
+    "text": "Know this, my beloved brothers: let every person be quick to hear, slow to speak, slow to anger.",
+    "translation": "ESV",
+    "tags": ["Anger", "Self-Control"],
+    "application": "The order matters: listen first, think second, respond last. Master this sequence."
+  },
+  {
+    "id": "prov-15-1",
+    "reference": "Proverbs 15:1",
+    "text": "A soft answer turns away wrath, but a harsh word stirs up anger.",
+    "translation": "ESV",
+    "tags": ["Anger"],
+    "application": "You control the temperature of a conflict with your words. Choose them carefully."
+  },
+  {
+    "id": "prov-29-11",
+    "reference": "Proverbs 29:11",
+    "text": "A fool gives full vent to his spirit, but a wise man quietly holds it back.",
+    "translation": "ESV",
+    "tags": ["Anger", "Self-Control"],
+    "application": "Restraint is wisdom in action. The man who controls his reaction controls the room."
+  },
+  {
+    "id": "col-3-8",
+    "reference": "Colossians 3:8",
+    "text": "But now you must put them all away: anger, wrath, malice, slander, and obscene talk from your mouth.",
+    "translation": "ESV",
+    "tags": ["Anger", "Self-Control"],
+    "application": "These are habits that must be actively shed. Identify them in yourself and cut them out."
+  },
+  {
+    "id": "matt-5-9",
+    "reference": "Matthew 5:9",
+    "text": "Blessed are the peacemakers, for they shall be called sons of God.",
+    "translation": "ESV",
+    "tags": ["Anger", "Leadership"],
+    "application": "Peacemaking is active, not passive. Pursue reconciliation—it's the mark of spiritual maturity."
+  },
+  {
+    "id": "1tim-3-2",
+    "reference": "1 Timothy 3:2",
+    "text": "Therefore an overseer must be above reproach, the husband of one wife, sober-minded, self-controlled, respectable, hospitable, able to teach.",
+    "translation": "ESV",
+    "tags": ["Leadership", "Self-Control"],
+    "application": "Leadership begins with character. The qualities listed here are all cultivated—not inherited."
+  },
+  {
+    "id": "mark-10-43",
+    "reference": "Mark 10:43",
+    "text": "But whoever would be great among you must be your servant.",
+    "translation": "ESV",
+    "tags": ["Leadership"],
+    "application": "Greatness flows from service. Lead by kneeling down, not climbing up."
+  },
+  {
+    "id": "prov-27-17",
+    "reference": "Proverbs 27:17",
+    "text": "Iron sharpens iron, and one man sharpens another.",
+    "translation": "ESV",
+    "tags": ["Leadership", "Purpose"],
+    "application": "Surround yourself with men who challenge you. Growth requires friction."
+  },
+  {
+    "id": "1pet-5-3",
+    "reference": "1 Peter 5:3",
+    "text": "Not domineering over those in your charge, but being examples to the flock.",
+    "translation": "ESV",
+    "tags": ["Leadership"],
+    "application": "Lead by example, not edict. Your life is the loudest sermon you preach."
+  },
+  {
+    "id": "prov-11-14",
+    "reference": "Proverbs 11:14",
+    "text": "Where there is no guidance, a people falls, but in an abundance of counselors there is safety.",
+    "translation": "ESV",
+    "tags": ["Leadership"],
+    "application": "Great leaders seek counsel—they're not threatened by wisdom they don't have."
+  },
+  {
+    "id": "prov-29-2",
+    "reference": "Proverbs 29:2",
+    "text": "When the righteous increase, the people rejoice, but when the wicked rule, the people groan.",
+    "translation": "ESV",
+    "tags": ["Leadership"],
+    "application": "Righteous leadership changes culture. The quality of your leadership affects those around you."
+  },
+  {
+    "id": "prov-10-4",
+    "reference": "Proverbs 10:4",
+    "text": "A slack hand causes poverty, but the hand of the diligent makes rich.",
+    "translation": "ESV",
+    "tags": ["Work/Provision"],
+    "application": "Diligence is not optional—it's the mechanism of provision. Work with full effort."
+  },
+  {
+    "id": "prov-6-6",
+    "reference": "Proverbs 6:6",
+    "text": "Go to the ant, O sluggard; consider her ways, and be wise.",
+    "translation": "ESV",
+    "tags": ["Work/Provision", "Discipline"],
+    "application": "Self-initiative without being told—this is the standard. Don't wait for someone to push you."
+  },
+  {
+    "id": "prov-14-23",
+    "reference": "Proverbs 14:23",
+    "text": "In all toil there is profit, but mere talk leads only to poverty.",
+    "translation": "ESV",
+    "tags": ["Work/Provision"],
+    "application": "Talk without action is debt. Profit comes from execution, not intention."
+  },
+  {
+    "id": "prov-22-29",
+    "reference": "Proverbs 22:29",
+    "text": "Do you see a man skillful in his work? He will stand before kings; he will not stand before obscure men.",
+    "translation": "ESV",
+    "tags": ["Work/Provision"],
+    "application": "Master your craft. Excellence creates its own opportunities—it opens doors you couldn't force."
+  },
+  {
+    "id": "2thess-3-10",
+    "reference": "2 Thessalonians 3:10",
+    "text": "If anyone is not willing to work, let him not eat.",
+    "translation": "ESV",
+    "tags": ["Work/Provision", "Discipline"],
+    "application": "Scripture is blunt about work ethic. God honors labor—it's built into the human design."
+  },
+  {
+    "id": "eccl-9-10",
+    "reference": "Ecclesiastes 9:10",
+    "text": "Whatever your hand finds to do, do it with your might.",
+    "translation": "ESV",
+    "tags": ["Work/Provision", "Discipline"],
+    "application": "Partial effort is a habit. Train yourself to bring full force to whatever is in front of you."
+  },
+  {
+    "id": "jas-1-4",
+    "reference": "James 1:4",
+    "text": "And let steadfastness have its full effect, that you may be perfect and complete, lacking in nothing.",
+    "translation": "ESV",
+    "tags": ["Patience", "Faith"],
+    "application": "Patience isn't passive waiting—it's active endurance that produces wholeness."
+  },
+  {
+    "id": "rom-5-3",
+    "reference": "Romans 5:3-4",
+    "text": "We rejoice in our sufferings, knowing that suffering produces endurance, and endurance produces character, and character produces hope.",
+    "translation": "ESV",
+    "tags": ["Patience", "Discipline"],
+    "application": "Suffering has a purpose—it builds the chain from endurance to character to hope. Stay in it."
+  },
+  {
+    "id": "gal-6-9",
+    "reference": "Galatians 6:9",
+    "text": "And let us not grow weary of doing good, for in due season we will reap, if we do not give up.",
+    "translation": "ESV",
+    "tags": ["Patience", "Discipline"],
+    "application": "The harvest isn't immediate—but it's coming. Keep working while others quit."
+  },
+  {
+    "id": "prov-14-29",
+    "reference": "Proverbs 14:29",
+    "text": "Whoever is slow to anger has great understanding, but he who has a hasty temper exalts folly.",
+    "translation": "ESV",
+    "tags": ["Patience", "Anger"],
+    "application": "Patience is a form of wisdom. Hasty reactions expose shallow thinking."
+  },
+  {
+    "id": "rom-12-12",
+    "reference": "Romans 12:12",
+    "text": "Rejoice in hope, be patient in tribulation, be constant in prayer.",
+    "translation": "ESV",
+    "tags": ["Patience", "Faith"],
+    "application": "Three anchors for hard seasons: hope, patience, prayer. Return to them when storms rise."
+  },
+  {
+    "id": "jas-1-3",
+    "reference": "James 1:3",
+    "text": "For you know that the testing of your faith produces steadfastness.",
+    "translation": "ESV",
+    "tags": ["Patience", "Faith"],
+    "application": "Tests are tools, not punishments. Each one builds the endurance needed for what's next."
+  },
+  {
+    "id": "ps-37-7",
+    "reference": "Psalm 37:7",
+    "text": "Be still before the Lord and wait patiently for him; fret not yourself over the one who prospers in his way.",
+    "translation": "ESV",
+    "tags": ["Patience", "Anxiety/Fear"],
+    "application": "Comparison is corrosive. Focus on your lane—God's timing is precise for you."
+  },
+  {
+    "id": "heb-11-1",
+    "reference": "Hebrews 11:1",
+    "text": "Now faith is the assurance of things hoped for, the conviction of things not seen.",
+    "translation": "ESV",
+    "tags": ["Faith"],
+    "application": "Faith is not blind—it's convicted. Stand on what you know about God even when you cannot see."
+  },
+  {
+    "id": "mark-11-24",
+    "reference": "Mark 11:24",
+    "text": "Therefore I tell you, whatever you ask in prayer, believe that you have received it, and it will be yours.",
+    "translation": "ESV",
+    "tags": ["Faith"],
+    "application": "Pray with conviction, not contingency. The posture of faith changes what you ask and how."
+  },
+  {
+    "id": "prov-3-5",
+    "reference": "Proverbs 3:5-6",
+    "text": "Trust in the Lord with all your heart, and do not lean on your own understanding. In all your ways acknowledge him, and he will make straight your paths.",
+    "translation": "ESV",
+    "tags": ["Faith", "Purpose"],
+    "application": "Full surrender, not partial trust. God straightens paths when you stop trying to navigate alone."
+  },
+  {
+    "id": "rom-10-17",
+    "reference": "Romans 10:17",
+    "text": "So faith comes from hearing, and hearing through the word of Christ.",
+    "translation": "ESV",
+    "tags": ["Faith", "Discipline"],
+    "application": "Faith grows through engagement with Scripture. You cannot strengthen what you don't feed."
+  },
+  {
+    "id": "matt-17-20",
+    "reference": "Matthew 17:20",
+    "text": "He said to them, 'For truly, I say to you, if you have faith like a grain of mustard seed, you will say to this mountain, Move from here to there, and it will move.'",
+    "translation": "ESV",
+    "tags": ["Faith", "Courage"],
+    "application": "God doesn't require massive faith—He requires real faith. Start where you are and watch it grow."
+  },
+  {
+    "id": "prov-24-16",
+    "reference": "Proverbs 24:16",
+    "text": "For the righteous falls seven times and rises again, but the wicked stumble in times of calamity.",
+    "translation": "ESV",
+    "tags": ["Discipline", "Courage"],
+    "application": "Failure does not define you—how many times you rise does. The righteous get back up."
+  },
+  {
+    "id": "phil-4-13",
+    "reference": "Philippians 4:13",
+    "text": "I can do all things through him who strengthens me.",
+    "translation": "ESV",
+    "tags": ["Courage", "Faith"],
+    "application": "This is about contentment in every situation, not unlimited ability. Lean on Christ's strength, not your own."
+  },
+  {
+    "id": "prov-21-5",
+    "reference": "Proverbs 21:5",
+    "text": "The plans of the diligent lead surely to abundance, but everyone who is hasty comes only to poverty.",
+    "translation": "ESV",
+    "tags": ["Discipline", "Work/Provision"],
+    "application": "Deliberate planning combined with diligent execution is the blueprint for success."
+  },
+  {
+    "id": "dan-1-8",
+    "reference": "Daniel 1:8",
+    "text": "But Daniel resolved that he would not defile himself with the king's food, or with the wine that he drank.",
+    "translation": "ESV",
+    "tags": ["Self-Control", "Courage"],
+    "application": "Resolve precedes action. Make your commitments before the pressure hits."
+  },
+  {
+    "id": "prov-16-3",
+    "reference": "Proverbs 16:3",
+    "text": "Commit your work to the Lord, and your plans will be established.",
+    "translation": "ESV",
+    "tags": ["Work/Provision", "Faith"],
+    "application": "Surrender your plans to God at the start. He stabilizes what He's invited into."
+  },
+  {
+    "id": "mic-6-8",
+    "reference": "Micah 6:8",
+    "text": "He has told you, O man, what is good; and what does the Lord require of you but to do justice, and to love kindness, and to walk humbly with your God?",
+    "translation": "ESV",
+    "tags": ["Purpose", "Leadership"],
+    "application": "Three commands for the whole life: act justly, love mercy, walk humbly. Simple and demanding."
+  },
+  {
+    "id": "1kings-2-2",
+    "reference": "1 Kings 2:2",
+    "text": "I am about to go the way of all the earth. Be strong, and show yourself a man.",
+    "translation": "ESV",
+    "tags": ["Courage", "Purpose"],
+    "application": "Show yourself a man—through your decisions, your character, and your courage under pressure."
+  },
+  {
+    "id": "ps-1-1",
+    "reference": "Psalm 1:1-2",
+    "text": "Blessed is the man who walks not in the counsel of the wicked, nor stands in the way of sinners, nor sits in the seat of scoffers; but his delight is in the law of the Lord.",
+    "translation": "ESV",
+    "tags": ["Discipline", "Purpose"],
+    "application": "Who you spend time with and what you consume shapes who you become. Choose deliberately."
+  },
+  {
+    "id": "prov-27-23",
+    "reference": "Proverbs 27:23",
+    "text": "Know well the condition of your flocks, and give attention to your herds.",
+    "translation": "ESV",
+    "tags": ["Work/Provision", "Leadership"],
+    "application": "Know the state of what you're responsible for. Attentive stewardship prevents ruin."
+  },
+  {
+    "id": "eccl-4-9",
+    "reference": "Ecclesiastes 4:9",
+    "text": "Two are better than one, because they have a good reward for their toil.",
+    "translation": "ESV",
+    "tags": ["Leadership", "Purpose"],
+    "application": "Brotherhood multiplies effort. Build deep relationships with men who are serious about growth."
+  },
+  {
+    "id": "eph-5-25",
+    "reference": "Ephesians 5:25",
+    "text": "Husbands, love your wives, as Christ loved the church and gave himself up for her.",
+    "translation": "ESV",
+    "tags": ["Leadership", "Purpose"],
+    "application": "Christ's love was sacrificial and intentional. Lead your family with that same posture."
+  },
+  {
+    "id": "prov-20-7",
+    "reference": "Proverbs 20:7",
+    "text": "The righteous who walks in his integrity—blessed are his children after him.",
+    "translation": "ESV",
+    "tags": ["Purpose", "Leadership"],
+    "application": "Your integrity creates a legacy. What you model today, your children inherit tomorrow."
+  },
+  {
+    "id": "1cor-15-58",
+    "reference": "1 Corinthians 15:58",
+    "text": "Be steadfast, immovable, always abounding in the work of the Lord, knowing that in the Lord your labor is not in vain.",
+    "translation": "ESV",
+    "tags": ["Work/Provision", "Faith"],
+    "application": "Nothing done for God is wasted. Work with that certainty—even unseen effort counts."
+  },
+  {
+    "id": "ps-90-12",
+    "reference": "Psalm 90:12",
+    "text": "So teach us to number our days that we may get a heart of wisdom.",
+    "translation": "ESV",
+    "tags": ["Discipline", "Purpose"],
+    "application": "Time is finite. Treat each day as irreplaceable and invest it with intention."
+  },
+  {
+    "id": "prov-3-9",
+    "reference": "Proverbs 3:9-10",
+    "text": "Honor the Lord with your wealth and with the firstfruits of all your produce; then your barns will be filled with plenty.",
+    "translation": "ESV",
+    "tags": ["Work/Provision", "Faith"],
+    "application": "Generosity precedes abundance. Honor God first—then watch how provision follows."
+  },
+  {
+    "id": "ps-112-1",
+    "reference": "Psalm 112:1",
+    "text": "Blessed is the man who fears the Lord, who greatly delights in his commandments!",
+    "translation": "ESV",
+    "tags": ["Faith", "Discipline"],
+    "application": "Fear of God is not terror—it's reverence. The man who holds God in awe lives differently."
+  },
+  {
+    "id": "2cor-12-9",
+    "reference": "2 Corinthians 12:9",
+    "text": "But he said to me, 'My grace is sufficient for you, for my power is made perfect in weakness.'",
+    "translation": "ESV",
+    "tags": ["Faith", "Courage"],
+    "application": "Your weakness is not a liability—it's where God's power is most visible. Don't hide it."
+  },
+  {
+    "id": "heb-6-12",
+    "reference": "Hebrews 6:12",
+    "text": "So that you may not be sluggish, but imitators of those who through faith and patience inherit the promises.",
+    "translation": "ESV",
+    "tags": ["Patience", "Faith"],
+    "application": "Find men who are further along and study how they endured. Imitate their faith."
+  },
+  {
+    "id": "prov-18-21",
+    "reference": "Proverbs 18:21",
+    "text": "Death and life are in the power of the tongue, and those who love it will eat its fruits.",
+    "translation": "ESV",
+    "tags": ["Self-Control", "Leadership"],
+    "application": "Your words shape your reality and others'. Wield them with care and purpose."
+  },
+  {
+    "id": "ps-19-14",
+    "reference": "Psalm 19:14",
+    "text": "Let the words of my mouth and the meditation of my heart be acceptable in your sight, O Lord, my rock and my redeemer.",
+    "translation": "ESV",
+    "tags": ["Discipline", "Self-Control"],
+    "application": "Align your inner life with your outer life. What you meditate on shapes what you say."
+  },
+  {
+    "id": "prov-4-7",
+    "reference": "Proverbs 4:7",
+    "text": "The beginning of wisdom is this: Get wisdom, and whatever you get, get insight.",
+    "translation": "ESV",
+    "tags": ["Purpose", "Discipline"],
+    "application": "Pursue wisdom as a priority, not a byproduct. Invest time and energy in knowing what matters."
+  },
+  {
+    "id": "neh-6-3",
+    "reference": "Nehemiah 6:3",
+    "text": "And I sent messengers to them, saying, 'I am doing a great work and I cannot come down.'",
+    "translation": "ESV",
+    "tags": ["Purpose", "Discipline"],
+    "application": "Know your assignment and protect your focus from constant interruptions and distractions."
+  },
+  {
+    "id": "prov-13-20",
+    "reference": "Proverbs 13:20",
+    "text": "Whoever walks with the wise becomes wise, but the companion of fools will suffer harm.",
+    "translation": "ESV",
+    "tags": ["Purpose", "Discipline"],
+    "application": "Environment shapes character. Evaluate who you're spending the most time with."
+  },
+  {
+    "id": "isa-40-31",
+    "reference": "Isaiah 40:31",
+    "text": "But they who wait for the Lord shall renew their strength; they shall mount up with wings like eagles.",
+    "translation": "ESV",
+    "tags": ["Patience", "Faith"],
+    "application": "Waiting on God is not inaction—it's renewal. Your strength is restored in His presence."
+  },
+  {
+    "id": "num-23-19",
+    "reference": "Numbers 23:19",
+    "text": "God is not man, that he should lie, or a son of man, that he should change his mind. Has he said, and will he not do it? Or has he spoken, and will he not fulfill it?",
+    "translation": "ESV",
+    "tags": ["Faith"],
+    "application": "God's word is your foundation because His character is unchanging. Trust what He has said."
+  },
+  {
+    "id": "prov-11-2",
+    "reference": "Proverbs 11:2",
+    "text": "When pride comes, then comes disgrace, but with the humble is wisdom.",
+    "translation": "ESV",
+    "tags": ["Leadership", "Self-Control"],
+    "application": "Pride precedes every major fall. Build a habit of humility before God and others."
+  },
+  {
+    "id": "1cor-10-13",
+    "reference": "1 Corinthians 10:13",
+    "text": "No temptation has overtaken you that is not common to man. God is faithful, and he will not let you be tempted beyond your ability.",
+    "translation": "ESV",
+    "tags": ["Self-Control", "Faith"],
+    "application": "You always have a way out. The escape route exists—look for it before yielding."
+  },
+  {
+    "id": "prov-16-9",
+    "reference": "Proverbs 16:9",
+    "text": "The heart of man plans his way, but the Lord establishes his steps.",
+    "translation": "ESV",
+    "tags": ["Purpose", "Faith"],
+    "application": "Plan with diligence—but walk with open hands. God orders the steps of the wise."
+  },
+  {
+    "id": "lam-3-22",
+    "reference": "Lamentations 3:22-23",
+    "text": "The steadfast love of the Lord never ceases; his mercies never come to an end; they are new every morning; great is your faithfulness.",
+    "translation": "ESV",
+    "tags": ["Faith", "Patience"],
+    "application": "Every morning is a reset. God's faithfulness is the floor your day is built on."
+  },
+  {
+    "id": "deut-6-6",
+    "reference": "Deuteronomy 6:6-7",
+    "text": "And these words that I command you today shall be on your heart. You shall teach them diligently to your children.",
+    "translation": "ESV",
+    "tags": ["Purpose", "Leadership"],
+    "application": "Truth must live in you before it can flow from you. Your family catches what you carry."
+  },
+  {
+    "id": "prov-28-1",
+    "reference": "Proverbs 28:1",
+    "text": "The wicked flee when no one pursues, but the righteous are bold as a lion.",
+    "translation": "ESV",
+    "tags": ["Courage", "Faith"],
+    "application": "A clean conscience produces natural boldness. Live rightly and fear no one."
+  }
+]
