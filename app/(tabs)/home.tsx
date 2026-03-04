@@ -10,11 +10,23 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { useApp } from "@/context/AppContext";
 import { VerseCard } from "@/components/VerseCard";
+import { DailyChallengeCard } from "@/components/DailyChallengeCard";
 import { Colors } from "@/constants/colors";
 
 export default function HomeScreen() {
   const insets = useSafeAreaInsets();
-  const { streak, activeVerse, dailyVerse, isSaved, toggleSave, nextVerse } = useApp();
+  const {
+    streak,
+    activeVerse,
+    dailyVerse,
+    isSaved,
+    toggleSave,
+    nextVerse,
+    dailyChallenge,
+    challengeCompleted,
+    weeklyCount,
+    markChallenge,
+  } = useApp();
   const isToday = activeVerse.id === dailyVerse.id;
 
   return (
@@ -31,6 +43,7 @@ export default function HomeScreen() {
       ]}
       showsVerticalScrollIndicator={false}
     >
+      {/* Header */}
       <View style={styles.header}>
         <View>
           <Text style={styles.greeting}>Daily Word</Text>
@@ -45,10 +58,13 @@ export default function HomeScreen() {
       {!isToday && (
         <View style={styles.exploreBanner}>
           <Ionicons name="shuffle" size={14} color={Colors.textMuted} />
-          <Text style={styles.exploreBannerText}>Exploring — your daily verse is still set</Text>
+          <Text style={styles.exploreBannerText}>
+            Exploring — your daily verse is still set
+          </Text>
         </View>
       )}
 
+      {/* Verse of the day */}
       <VerseCard
         verse={activeVerse}
         isSaved={isSaved(activeVerse.id)}
@@ -58,6 +74,15 @@ export default function HomeScreen() {
         isDaily={isToday}
       />
 
+      {/* Daily Challenge — always tied to today's daily verse, not the browsed one */}
+      <DailyChallengeCard
+        challenge={dailyChallenge}
+        completed={challengeCompleted}
+        weeklyCount={weeklyCount}
+        onMarkComplete={markChallenge}
+      />
+
+      {/* Quick category links */}
       <View style={styles.sectionHeader}>
         <Text style={styles.sectionTitle}>Categories</Text>
       </View>

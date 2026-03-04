@@ -7,6 +7,7 @@ export interface Verse {
   translation: string;
   tags: string[];
   application: string;
+  challenge?: string;
 }
 
 /** All verses loaded from the local JSON file. */
