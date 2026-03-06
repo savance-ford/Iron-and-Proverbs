@@ -57,26 +57,29 @@ export function VerseCard({
     // Show the modal so the ShareCard is fully rendered on-screen before capture
     setCapturing(true);
 
-    // One frame for the Modal to commit its layout to native before we capture
-    await new Promise<void>((r) => setTimeout(r, 100));
-
-    try {
-      const uri = await captureRef(shareViewRef, {
-        format: "png",
-        quality: 1.0,
-        result: "tmpfile",
-      });
-      // Hide the modal before the share sheet appears
-      setCapturing(false);
-      await Sharing.shareAsync(uri, {
-        mimeType: "image/png",
-        dialogTitle: "Share this verse",
-      });
-    } catch (e) {
-      setCapturing(false);
-      console.warn("Share failed", e);
-    }
   };
+
+  
+  const handleCapture = async () => {
+  try {
+    const uri = await captureRef(shareViewRef, {
+      format: "png",
+      quality: 1.0,
+      result: "tmpfile",
+   });
+    // Hide the modal before the share sheet appears
+    setCapturing(false);
+    await Sharing.shareAsync(uri, { 
+      mimeType: "image/png",
+      dialogTitle: "Share this verse",
+  });
+  } catch (e) {
+    setCapturing(false);
+    console.warn("Share failed", e);
+  }
+};
+
+
 
   const handleNext = async () => {
     await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -94,6 +97,7 @@ export function VerseCard({
       {Platform.OS !== "web" && (
         <Modal
           visible={capturing}
+          onShow={handleCapture}
           transparent={false}
           animationType="none"
           statusBarTranslucent
