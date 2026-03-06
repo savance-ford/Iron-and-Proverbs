@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import {
   View,
   Text,
@@ -6,10 +6,11 @@ import {
   Pressable,
   Platform,
   Alert,
+  Modal,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
-import ViewShot from "react-native-view-shot";
+import { captureRef } from "react-native-view-shot";
 import * as Sharing from "expo-sharing";
 import { Colors } from "@/constants/colors";
 import { Verse } from "@/lib/verseEngine";
@@ -34,8 +35,8 @@ export function VerseCard({
   isDaily = false,
   shareLabel,
 }: VerseCardProps) {
-  // This ref points at the off-screen ShareCard — not the on-screen display
-  const shotRef = useRef<ViewShot>(null);
+  const shareViewRef = useRef<View>(null);
+  const [capturing, setCapturing] = useState(false);
 
   const handleSave = async () => {
     await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
@@ -44,6 +45,7 @@ export function VerseCard({
 
   const handleShare = async () => {
     await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+
     if (Platform.OS === "web") {
       Alert.alert(
         "Share on Mobile",
@@ -51,15 +53,27 @@ export function VerseCard({
       );
       return;
     }
+
+    // Show the modal so the ShareCard is fully rendered on-screen before capture
+    setCapturing(true);
+
+    // One frame for the Modal to commit its layout to native before we capture
+    await new Promise<void>((r) => setTimeout(r, 100));
+
     try {
-      const uri = await (shotRef.current as any)?.capture?.();
-      if (uri) {
-        await Sharing.shareAsync(uri, {
-          mimeType: "image/png",
-          dialogTitle: "Share this verse",
-        });
-      }
+      const uri = await captureRef(shareViewRef, {
+        format: "png",
+        quality: 1.0,
+        result: "tmpfile",
+      });
+      // Hide the modal before the share sheet appears
+      setCapturing(false);
+      await Sharing.shareAsync(uri, {
+        mimeType: "image/png",
+        dialogTitle: "Share this verse",
+      });
     } catch (e) {
+      setCapturing(false);
       console.warn("Share failed", e);
     }
   };
@@ -71,16 +85,25 @@ export function VerseCard({
 
   return (
     <View style={styles.container}>
-      {/* Off-screen premium share card — native only, rendered but invisible, captured by ViewShot */}
+      {/*
+       * Share capture Modal — native only.
+       * Renders the ShareCard fully on-screen (invisible to the user — appears and
+       * disappears in under 200ms) so captureRef can reliably produce an image.
+       * animationType="none" ensures no animation delay.
+       */}
       {Platform.OS !== "web" && (
-        <View style={styles.offScreen} pointerEvents="none">
-          <ViewShot
-            ref={shotRef}
-            options={{ format: "png", quality: 1.0, result: "tmpfile" }}
-          >
-            <ShareCard verse={verse} label={shareLabel} />
-          </ViewShot>
-        </View>
+        <Modal
+          visible={capturing}
+          transparent={false}
+          animationType="none"
+          statusBarTranslucent
+        >
+          <View style={styles.captureModalBg}>
+            <View ref={shareViewRef} collapsable={false}>
+              <ShareCard verse={verse} label={shareLabel} />
+            </View>
+          </View>
+        </Modal>
       )}
 
       {/* On-screen in-app display card */}
@@ -130,9 +153,7 @@ export function VerseCard({
             size={20}
             color={isSaved ? Colors.amber : Colors.textSecondary}
           />
-          <Text
-            style={[styles.actionLabel, isSaved && { color: Colors.amber }]}
-          >
+          <Text style={[styles.actionLabel, isSaved && { color: Colors.amber }]}>
             {isSaved ? "Saved" : "Save"}
           </Text>
         </Pressable>
@@ -143,9 +164,14 @@ export function VerseCard({
             pressed && styles.actionButtonPressed,
           ]}
           onPress={handleShare}
+          disabled={capturing}
         >
-          <Ionicons name="share-outline" size={20} color={Colors.textSecondary} />
-          <Text style={styles.actionLabel}>Share</Text>
+          <Ionicons
+            name={capturing ? "hourglass-outline" : "share-outline"}
+            size={20}
+            color={Colors.textSecondary}
+          />
+          <Text style={styles.actionLabel}>{capturing ? "…" : "Share"}</Text>
         </Pressable>
 
         {showNext && (
@@ -173,11 +199,11 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
   },
-  // Positioned far off-screen so it's laid out and rendered but never visible to the user
-  offScreen: {
-    position: "absolute",
-    left: -9999,
-    top: 0,
+  captureModalBg: {
+    flex: 1,
+    backgroundColor: "#0A0A0A",
+    alignItems: "center",
+    justifyContent: "center",
   },
   card: {
     backgroundColor: Colors.surface,
