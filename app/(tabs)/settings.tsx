@@ -5,15 +5,30 @@ import {
   StyleSheet,
   ScrollView,
   Platform,
+  Pressable,
+  Alert,
+  Linking,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "@/constants/colors";
 
+// Replace these with your real hosted URLs before shipping.
+const PRIVACY_POLICY_URL = "https://savance-ford.github.io/Iron-and-Proverbs/privacy-policy.html";
+const TERMS_OF_SERVICE_URL = "https://savance-ford.github.io/Iron-and-Proverbs/terms-of-service.html";
+const SUPPORT_EMAIL = "quoteverseapps@gmail.com";
+
 interface SectionRowProps {
   icon: string;
   label: string;
   value?: string;
+}
+
+interface SectionLinkRowProps {
+  icon: string;
+  label: string;
+  value?: string;
+  onPress: () => void;
 }
 
 function SectionRow({ icon, label, value }: SectionRowProps) {
@@ -30,6 +45,24 @@ function SectionRow({ icon, label, value }: SectionRowProps) {
   );
 }
 
+function SectionLinkRow({ icon, label, value, onPress }: SectionLinkRowProps) {
+  return (
+    <Pressable
+      onPress={onPress}
+      style={({ pressed }) => [rowStyles.row, pressed && rowStyles.rowPressed]}
+    >
+      <View style={rowStyles.iconWrap}>
+        <Ionicons name={icon as any} size={18} color={Colors.textSecondary} />
+      </View>
+      <View style={rowStyles.content}>
+        <Text style={rowStyles.label}>{label}</Text>
+        {value && <Text style={rowStyles.value}>{value}</Text>}
+      </View>
+      <Ionicons name="chevron-forward" size={18} color={Colors.textMuted} />
+    </Pressable>
+  );
+}
+
 const rowStyles = StyleSheet.create({
   row: {
     flexDirection: "row",
@@ -37,6 +70,9 @@ const rowStyles = StyleSheet.create({
     paddingVertical: 14,
     paddingHorizontal: 16,
     gap: 14,
+  },
+  rowPressed: {
+    opacity: 0.7,
   },
   iconWrap: {
     width: 36,
@@ -64,6 +100,36 @@ const rowStyles = StyleSheet.create({
 
 export default function SettingsScreen() {
   const insets = useSafeAreaInsets();
+
+  const openExternalUrl = async (url: string, fallbackLabel: string) => {
+    try {
+      const supported = await Linking.canOpenURL(url);
+      if (!supported) {
+        Alert.alert(
+          "Link unavailable",
+          `Add your ${fallbackLabel} URL in app/(tabs)/settings.tsx before using this action.`
+        );
+        return;
+      }
+      await Linking.openURL(url);
+    } catch {
+      Alert.alert("Unable to open link", "Please try again in a moment.");
+    }
+  };
+
+  const openSupportEmail = async () => {
+    const url = `mailto:${SUPPORT_EMAIL}?subject=Iron%20%26%20Proverbs%20Support`;
+    try {
+      const supported = await Linking.canOpenURL(url);
+      if (!supported) {
+        Alert.alert("Email unavailable", SUPPORT_EMAIL);
+        return;
+      }
+      await Linking.openURL(url);
+    } catch {
+      Alert.alert("Unable to open email", "Please try again in a moment.");
+    }
+  };
 
   return (
     <ScrollView
@@ -117,6 +183,32 @@ export default function SettingsScreen() {
             icon="server-outline"
             label="Data Storage"
             value="All data stored locally on your device"
+          />
+        </View>
+      </View>
+
+      <View style={styles.section}>
+        <Text style={styles.sectionLabel}>LEGAL</Text>
+        <View style={styles.sectionCard}>
+          <SectionLinkRow
+            icon="shield-checkmark-outline"
+            label="Privacy Policy"
+            value="View how the app handles data"
+            onPress={() => openExternalUrl(PRIVACY_POLICY_URL, "Privacy Policy")}
+          />
+          <View style={styles.separator} />
+          <SectionLinkRow
+            icon="document-text-outline"
+            label="Terms of Service"
+            value="Review the app terms"
+            onPress={() => openExternalUrl(TERMS_OF_SERVICE_URL, "Terms of Service")}
+          />
+          <View style={styles.separator} />
+          <SectionLinkRow
+            icon="mail-outline"
+            label="Contact Support"
+            value={SUPPORT_EMAIL}
+            onPress={openSupportEmail}
           />
         </View>
       </View>
