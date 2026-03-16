@@ -127,7 +127,7 @@ export default function SettingsScreen() {
       }
       await Linking.openURL(url);
     } catch {
-      Alert.alert("Email unavailable", SUPPORT_EMAIL);
+      Alert.alert("Unable to open email", "Please try again in a moment.");
     }
   };
 
