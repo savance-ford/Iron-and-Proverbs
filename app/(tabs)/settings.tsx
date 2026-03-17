@@ -168,21 +168,15 @@ export default function SettingsScreen() {
           />
           <View style={styles.separator} />
           <SectionRow
-            icon="layers-outline"
-            label="Verses Available"
-            value="84 hand-selected verses"
-          />
-          <View style={styles.separator} />
-          <SectionRow
             icon="globe-outline"
-            label="Categories"
-            value="10 masculine-focused themes"
+            label="Topics"
+            value="10 focus areas"
           />
           <View style={styles.separator} />
           <SectionRow
             icon="server-outline"
             label="Data Storage"
-            value="All data stored locally on your device"
+            value="Stored locally on your device"
           />
         </View>
       </View>
