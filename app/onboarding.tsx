@@ -98,7 +98,7 @@ export default function OnboardingScreen() {
       {/* Skip button — always visible and functional on all slides */}
       <TouchableOpacity
         style={styles.skipButton}
-        onPress={() => dismissOnboarding()}
+        onPress={dismissOnboarding}
         accessibilityLabel="Skip onboarding"
         hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
       >
