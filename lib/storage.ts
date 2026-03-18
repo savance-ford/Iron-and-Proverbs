@@ -188,8 +188,13 @@ const ONBOARDING_KEY = "iron_has_seen_onboarding";
  * correct initial route can be chosen before anything is rendered.
  */
 export async function getHasSeenOnboarding(): Promise<boolean> {
-  const value = await AsyncStorage.getItem(ONBOARDING_KEY);
-  return value === "true";
+  try {
+    const value = await AsyncStorage.getItem(ONBOARDING_KEY);
+    return value === "true";
+  } catch (error) {
+    console.error("Failed to get onboarding status from storage", error);
+    return false;
+  }
 }
 
 /**
@@ -199,5 +204,9 @@ export async function getHasSeenOnboarding(): Promise<boolean> {
  * any slide.
  */
 export async function setHasSeenOnboarding(): Promise<void> {
-  await AsyncStorage.setItem(ONBOARDING_KEY, "true");
+  try {
+    await AsyncStorage.setItem(ONBOARDING_KEY, "true");
+  } catch (error) {
+    console.error("Failed to set onboarding status in storage", error);
+  }
 }
