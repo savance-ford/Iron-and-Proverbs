@@ -176,3 +176,37 @@ export async function getWeeklyChallengeCount(): Promise<number> {
   const last7 = Array.from({ length: 7 }, (_, i) => daysAgoString(i));
   return dates.filter((d) => last7.includes(d)).length;
 }
+
+// ─── Onboarding ──────────────────────────────────────────────────────────────
+
+const ONBOARDING_KEY = "iron_has_seen_onboarding";
+
+/**
+ * Returns true if the user has already completed (or skipped) onboarding.
+ * Returns false on a brand-new install or after clearing storage.
+ * This is checked in the root layout immediately after fonts load so the
+ * correct initial route can be chosen before anything is rendered.
+ */
+export async function getHasSeenOnboarding(): Promise<boolean> {
+  try {
+    const value = await AsyncStorage.getItem(ONBOARDING_KEY);
+    return value === "true";
+  } catch (error) {
+    console.error("Failed to get onboarding status from storage", error);
+    return false;
+  }
+}
+
+/**
+ * Persists the fact that the user has seen onboarding so that on every
+ * subsequent launch the app skips straight to the main tab flow.
+ * Called when the user taps "Get Started" on the last slide or "Skip" on
+ * any slide.
+ */
+export async function setHasSeenOnboarding(): Promise<void> {
+  try {
+    await AsyncStorage.setItem(ONBOARDING_KEY, "true");
+  } catch (error) {
+    console.error("Failed to set onboarding status in storage", error);
+  }
+}
