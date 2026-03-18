@@ -72,15 +72,15 @@ export default function OnboardingScreen() {
    * Derive the active slide index from scroll position.
    * Works reliably on both native and web.
    */
-  function handleScroll(e: NativeSyntheticEvent<NativeScrollEvent>) {
+  const handleScroll = React.useCallback((e: NativeSyntheticEvent<NativeScrollEvent>) => {
     const offsetX = e.nativeEvent.contentOffset.x;
     const index = Math.round(offsetX / SCREEN_WIDTH);
     if (index !== activeIndex) {
       setActiveIndex(index);
     }
-  }
+  }, [activeIndex]);
 
-  function goToNext() {
+  const goToNext = React.useCallback(() => {
     if (isLastSlide) {
       dismissOnboarding();
     } else {
@@ -88,7 +88,7 @@ export default function OnboardingScreen() {
       scrollRef.current?.scrollTo({ x: nextIndex * SCREEN_WIDTH, animated: true });
       setActiveIndex(nextIndex);
     }
-  }
+  }, [isLastSlide, activeIndex]);
 
   const topPadding = Platform.OS === "web" ? 67 : insets.top;
   const bottomPadding = Platform.OS === "web" ? 34 : insets.bottom;
