@@ -5,6 +5,10 @@ const KEYS = {
   LAST_OPENED: "iron_last_opened_date",
   SAVED_VERSES: "iron_saved_verses",
   CHALLENGE_COMPLETIONS: "iron_challenge_completions",
+  REMINDER_ENABLED: "iron_reminder_enabled",
+  REMINDER_HOUR: "iron_reminder_hour",
+  REMINDER_MINUTE: "iron_reminder_minute",
+  REMINDER_NOTIFICATION_ID: "iron_reminder_notification_id",
 } as const;
 
 /**
@@ -209,4 +213,53 @@ export async function setHasSeenOnboarding(): Promise<void> {
   } catch (error) {
     console.error("Failed to set onboarding status in storage", error);
   }
+}
+
+
+// ─── Daily Reminders ─────────────────────────────────────────────────────────
+
+export interface ReminderSettings {
+  enabled: boolean;
+  hour: number;
+  minute: number;
+  notificationId: string | null;
+}
+
+const DEFAULT_REMINDER_HOUR = 8;
+const DEFAULT_REMINDER_MINUTE = 0;
+
+/**
+ * Load persisted daily reminder settings for the Settings screen.
+ */
+export async function getReminderSettings(): Promise<ReminderSettings> {
+  const [enabledRaw, hourRaw, minuteRaw, notificationId] = await Promise.all([
+    AsyncStorage.getItem(KEYS.REMINDER_ENABLED),
+    AsyncStorage.getItem(KEYS.REMINDER_HOUR),
+    AsyncStorage.getItem(KEYS.REMINDER_MINUTE),
+    AsyncStorage.getItem(KEYS.REMINDER_NOTIFICATION_ID),
+  ]);
+
+  const hour = Number.isFinite(Number(hourRaw)) ? Number(hourRaw) : DEFAULT_REMINDER_HOUR;
+  const minute = Number.isFinite(Number(minuteRaw)) ? Number(minuteRaw) : DEFAULT_REMINDER_MINUTE;
+
+  return {
+    enabled: enabledRaw === 'true',
+    hour,
+    minute,
+    notificationId: notificationId ?? null,
+  };
+}
+
+/**
+ * Persist the enabled state, time, and scheduled notification identifier.
+ */
+export async function saveReminderSettings(settings: ReminderSettings): Promise<void> {
+  await Promise.all([
+    AsyncStorage.setItem(KEYS.REMINDER_ENABLED, String(settings.enabled)),
+    AsyncStorage.setItem(KEYS.REMINDER_HOUR, String(settings.hour)),
+    AsyncStorage.setItem(KEYS.REMINDER_MINUTE, String(settings.minute)),
+    settings.notificationId
+      ? AsyncStorage.setItem(KEYS.REMINDER_NOTIFICATION_ID, settings.notificationId)
+      : AsyncStorage.removeItem(KEYS.REMINDER_NOTIFICATION_ID),
+  ]);
 }
