@@ -13,6 +13,7 @@ import {
   isChallengeCompletedToday,
   markChallengeCompleteToday,
   getWeeklyChallengeCount,
+  incrementAndGetAppOpenCount,
 } from "@/lib/storage";
 import { getDailyVerse, getRandomVerse, Verse } from "@/lib/verseEngine";
 import { getChallengeForVerse } from "@/lib/challengeEngine";
@@ -30,6 +31,7 @@ interface AppContextValue {
   challengeCompleted: boolean;
   weeklyCount: number;
   markChallenge: () => Promise<void>;
+  appOpenCount: number;
 }
 
 const AppContext = createContext<AppContextValue | null>(null);
@@ -42,6 +44,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const [challengeCompleted, setChallengeCompleted] = useState(false);
   const [weeklyCount, setWeeklyCount] = useState(0);
+  const [appOpenCount, setAppOpenCount] = useState(0);
 
   // Derived challenge text — always tied to the daily verse, never the active verse
   const dailyChallenge = useMemo(
@@ -51,6 +54,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     updateAndGetStreak().then(setStreak);
+    incrementAndGetAppOpenCount().then(setAppOpenCount);
     getSavedVerseIds().then(setSavedIds);
     isChallengeCompletedToday().then(setChallengeCompleted);
     getWeeklyChallengeCount().then(setWeeklyCount);
@@ -92,8 +96,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
       challengeCompleted,
       weeklyCount,
       markChallenge,
+      appOpenCount,
     }),
-    [streak, savedIds, activeVerse, daily, challengeCompleted, weeklyCount, dailyChallenge]
+    [streak, savedIds, activeVerse, daily, challengeCompleted, weeklyCount, dailyChallenge, appOpenCount]
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
