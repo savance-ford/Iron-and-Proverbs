@@ -2,7 +2,7 @@
   "expo": {
     "name": "Iron & Proverbs",
     "slug": "iron-and-proverbs",
-    "version": "1.0.8",
+    "version": "1.0.11",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "ironandproverbs",
@@ -18,7 +18,7 @@
     },
     "android": {
       "package": "com.ironandproverbs.app",
-      "versionCode": 16,
+      "versionCode": 20,
       "adaptiveIcon": {
         "backgroundColor": "#0A0A0A",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
@@ -33,6 +33,13 @@
         "expo-router",
         {
           "origin": "https://replit.com/"
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "color": "#C9A84C",
+          "defaultChannel": "daily-reminders"
         }
       ],
       "expo-font",

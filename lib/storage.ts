@@ -5,6 +5,12 @@ const KEYS = {
   LAST_OPENED: "iron_last_opened_date",
   SAVED_VERSES: "iron_saved_verses",
   CHALLENGE_COMPLETIONS: "iron_challenge_completions",
+  REMINDER_ENABLED: "iron_reminder_enabled",
+  REMINDER_HOUR: "iron_reminder_hour",
+  REMINDER_MINUTE: "iron_reminder_minute",
+  REMINDER_NOTIFICATION_ID: "iron_reminder_notification_id",
+  APP_OPEN_COUNT: "iron_app_open_count",
+  REMINDER_PROMPT_DISMISSED_UNTIL: "iron_reminder_prompt_dismissed_until",
 } as const;
 
 /**
@@ -209,4 +215,117 @@ export async function setHasSeenOnboarding(): Promise<void> {
   } catch (error) {
     console.error("Failed to set onboarding status in storage", error);
   }
+}
+
+
+// ─── Daily Reminders ─────────────────────────────────────────────────────────
+
+export interface ReminderSettings {
+  enabled: boolean;
+  hour: number;
+  minute: number;
+  notificationId: string | null;
+}
+
+const DEFAULT_REMINDER_HOUR = 8;
+const DEFAULT_REMINDER_MINUTE = 0;
+
+/**
+ * Load persisted daily reminder settings for the Settings screen.
+ */
+export async function getReminderSettings(): Promise<ReminderSettings> {
+  const [enabledRaw, hourRaw, minuteRaw, notificationId] = await Promise.all([
+    AsyncStorage.getItem(KEYS.REMINDER_ENABLED),
+    AsyncStorage.getItem(KEYS.REMINDER_HOUR),
+    AsyncStorage.getItem(KEYS.REMINDER_MINUTE),
+    AsyncStorage.getItem(KEYS.REMINDER_NOTIFICATION_ID),
+  ]);
+
+  const hour = Number.isFinite(Number(hourRaw)) ? Number(hourRaw) : DEFAULT_REMINDER_HOUR;
+  const minute = Number.isFinite(Number(minuteRaw)) ? Number(minuteRaw) : DEFAULT_REMINDER_MINUTE;
+
+  return {
+    enabled: enabledRaw === 'true',
+    hour,
+    minute,
+    notificationId: notificationId ?? null,
+  };
+}
+
+/**
+ * Persist the enabled state, time, and scheduled notification identifier.
+ */
+export async function saveReminderSettings(settings: ReminderSettings): Promise<void> {
+  await Promise.all([
+    AsyncStorage.setItem(KEYS.REMINDER_ENABLED, String(settings.enabled)),
+    AsyncStorage.setItem(KEYS.REMINDER_HOUR, String(settings.hour)),
+    AsyncStorage.setItem(KEYS.REMINDER_MINUTE, String(settings.minute)),
+    settings.notificationId
+      ? AsyncStorage.setItem(KEYS.REMINDER_NOTIFICATION_ID, settings.notificationId)
+      : AsyncStorage.removeItem(KEYS.REMINDER_NOTIFICATION_ID),
+  ]);
+}
+
+
+// ─── Reminder Prompt ───────────────────────────────────────────────────────
+
+/**
+ * Increment and return the number of times the app has been opened.
+ * This is used to avoid showing the reminder prompt on the very first launch.
+ */
+export async function incrementAndGetAppOpenCount(): Promise<number> {
+  const raw = await AsyncStorage.getItem(KEYS.APP_OPEN_COUNT);
+  const current = parseInt(raw ?? "0", 10) || 0;
+  const next = current + 1;
+  await AsyncStorage.setItem(KEYS.APP_OPEN_COUNT, String(next));
+  return next;
+}
+
+/**
+ * Returns whether the Home reminder prompt should be shown.
+ * Rules:
+ * - never show if reminders are enabled
+ * - wait until the second app open
+ * - if the user dismissed it, hide until the stored reappear date
+ */
+export async function shouldShowReminderPrompt(): Promise<boolean> {
+  const [settings, rawCount, dismissedUntil] = await Promise.all([
+    getReminderSettings(),
+    AsyncStorage.getItem(KEYS.APP_OPEN_COUNT),
+    AsyncStorage.getItem(KEYS.REMINDER_PROMPT_DISMISSED_UNTIL),
+  ]);
+
+  if (settings.enabled) return false;
+
+  const openCount = parseInt(rawCount ?? "0", 10) || 0;
+  if (openCount < 2) return false;
+
+  if (dismissedUntil) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const until = new Date(dismissedUntil);
+    until.setHours(0, 0, 0, 0);
+    if (!Number.isNaN(until.getTime()) && today < until) return false;
+  }
+
+  return true;
+}
+
+/**
+ * Hide the Home reminder prompt temporarily. It reappears after the specified
+ * number of days if reminders are still off.
+ */
+export async function dismissReminderPrompt(days = 3): Promise<void> {
+  const d = new Date();
+  d.setDate(d.getDate() + days);
+  d.setHours(0, 0, 0, 0);
+  await AsyncStorage.setItem(KEYS.REMINDER_PROMPT_DISMISSED_UNTIL, d.toISOString());
+}
+
+/**
+ * Clear any temporary dismissal so the reminder prompt will no longer be held
+ * back by a previous "Not now" action. Useful once reminders are enabled.
+ */
+export async function clearReminderPromptDismissal(): Promise<void> {
+  await AsyncStorage.removeItem(KEYS.REMINDER_PROMPT_DISMISSED_UNTIL);
 }

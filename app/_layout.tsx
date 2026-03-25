@@ -15,6 +15,7 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { queryClient } from "@/lib/query-client";
 import { AppProvider } from "@/context/AppContext";
 import { getHasSeenOnboarding } from "@/lib/storage";
+import "@/lib/notifications";
 
 SplashScreen.preventAutoHideAsync();
 
