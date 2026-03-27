@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import {
+  Alert,
   Dimensions,
   NativeScrollEvent,
   NativeSyntheticEvent,
@@ -13,8 +14,19 @@ import {
 import { router } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
+import DateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker";
 import { Colors } from "@/constants/colors";
-import { setHasSeenOnboarding } from "@/lib/storage";
+import {
+  clearReminderPromptDismissal,
+  getReminderSettings,
+  saveReminderSettings,
+  setHasSeenOnboarding,
+} from "@/lib/storage";
+import {
+  requestReminderPermissionsAsync,
+  scheduleDailyReminderAsync,
+  formatReminderTime,
+} from "@/lib/notifications";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
@@ -25,37 +37,30 @@ interface Slide {
   subtitle: string;
 }
 
-/**
- * The three onboarding slides. Copy is intentionally minimal and premium.
- */
 const SLIDES: Slide[] = [
   {
     id: "1",
     icon: "flame-outline",
-    title: "Forge Your Mindset",
+    title: "Daily Strength",
     subtitle:
-      "Daily verses and challenges designed to build mental toughness, discipline, and purpose — one day at a time.",
+      "Start each day with a verse and challenge built to strengthen discipline, courage, and purpose.",
   },
   {
     id: "2",
     icon: "book-outline",
-    title: "Ancient Wisdom, Modern Strength",
+    title: "Find What You Need",
     subtitle:
-      "Stoic, biblical, and philosophical teachings distilled into focused lessons you can actually live by.",
+      "Browse Scripture by topic like fear, anger, leadership, faith, and more.",
   },
   {
     id: "3",
-    icon: "shield-checkmark-outline",
+    icon: "notifications-outline",
     title: "Stay Consistent",
     subtitle:
-      "Track your streak, complete daily challenges, and build the habits that separate ordinary from iron.",
+      "Turn on one daily reminder for your verse and challenge.",
   },
 ];
 
-/**
- * Dismisses onboarding by persisting the "seen" flag and navigating to tabs.
- * After this runs, all future launches skip onboarding entirely.
- */
 async function dismissOnboarding() {
   await setHasSeenOnboarding();
   router.replace("/(tabs)/home");
@@ -65,13 +70,13 @@ export default function OnboardingScreen() {
   const insets = useSafeAreaInsets();
   const scrollRef = useRef<ScrollView>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [reminderBusy, setReminderBusy] = useState(false);
+  const [showTimePicker, setShowTimePicker] = useState(false);
+  const [timeReady, setTimeReady] = useState(false);
+  const [selectedTime, setSelectedTime] = useState(new Date(0, 0, 0, 8, 0));
 
   const isLastSlide = activeIndex === SLIDES.length - 1;
 
-  /**
-   * Derive the active slide index from scroll position.
-   * Works reliably on both native and web.
-   */
   const handleScroll = React.useCallback((e: NativeSyntheticEvent<NativeScrollEvent>) => {
     const offsetX = e.nativeEvent.contentOffset.x;
     const index = Math.round(offsetX / SCREEN_WIDTH);
@@ -81,21 +86,106 @@ export default function OnboardingScreen() {
   }, [activeIndex]);
 
   const goToNext = React.useCallback(() => {
-    if (isLastSlide) {
-      dismissOnboarding();
-    } else {
-      const nextIndex = activeIndex + 1;
-      scrollRef.current?.scrollTo({ x: nextIndex * SCREEN_WIDTH, animated: true });
-      setActiveIndex(nextIndex);
-    }
+    if (isLastSlide) return;
+    const nextIndex = activeIndex + 1;
+    scrollRef.current?.scrollTo({ x: nextIndex * SCREEN_WIDTH, animated: true });
+    setActiveIndex(nextIndex);
   }, [isLastSlide, activeIndex]);
+
+  const finishOnboarding = React.useCallback(async () => {
+    await dismissOnboarding();
+  }, []);
+
+  const enableReminder = React.useCallback(async () => {
+    if (reminderBusy) return;
+    setReminderBusy(true);
+
+    try {
+      const granted = await requestReminderPermissionsAsync();
+      if (!granted) {
+        Alert.alert(
+          "Notifications are off",
+          "You can enable reminders later in Settings.",
+          [{ text: "Continue", onPress: () => finishOnboarding() }]
+        );
+        return;
+      }
+
+      const existing = await getReminderSettings();
+      const initial = new Date(0, 0, 0, existing.hour, existing.minute);
+      setSelectedTime(initial);
+
+      if (Platform.OS === "android") {
+        setShowTimePicker(true);
+      } else {
+        setTimeReady(true);
+      }
+    } catch {
+      Alert.alert("Reminder setup failed", "Please try again later in Settings.", [
+        { text: "Continue", onPress: () => finishOnboarding() },
+      ]);
+    } finally {
+      setReminderBusy(false);
+    }
+  }, [reminderBusy, finishOnboarding]);
+
+  const saveReminderAndFinish = React.useCallback(async (date: Date) => {
+    const hour = date.getHours();
+    const minute = date.getMinutes();
+
+    try {
+      setReminderBusy(true);
+      const notificationId = await scheduleDailyReminderAsync(hour, minute);
+      await saveReminderSettings({
+        enabled: true,
+        hour,
+        minute,
+        notificationId,
+      });
+      await clearReminderPromptDismissal();
+
+      Alert.alert(
+        "Daily reminder set",
+        `You'll get one reminder each day at ${formatReminderTime(hour, minute)}. You can change this anytime in Settings.`,
+        [{ text: "Continue", onPress: () => finishOnboarding() }]
+      );
+    } catch {
+      Alert.alert("Reminder setup failed", "Please try again later in Settings.", [
+        { text: "Continue", onPress: () => finishOnboarding() },
+      ]);
+    } finally {
+      setReminderBusy(false);
+      setShowTimePicker(false);
+      setTimeReady(false);
+    }
+  }, [finishOnboarding]);
+
+  const handleTimeChange = React.useCallback(async (event: DateTimePickerEvent, selectedDate?: Date) => {
+    if (Platform.OS === "android") {
+      setShowTimePicker(false);
+    }
+
+    if (event.type === "dismissed" || !selectedDate) {
+      return;
+    }
+
+    if (Platform.OS === "ios") {
+      setSelectedTime(selectedDate);
+      return;
+    }
+
+    await saveReminderAndFinish(selectedDate);
+  }, [saveReminderAndFinish]);
+
+  const handleIosDone = React.useCallback(async () => {
+    await saveReminderAndFinish(selectedTime);
+  }, [saveReminderAndFinish, selectedTime]);
 
   const topPadding = Platform.OS === "web" ? 67 : insets.top;
   const bottomPadding = Platform.OS === "web" ? 34 : insets.bottom;
 
   return (
     <View style={[styles.container, { paddingTop: topPadding }]}>
-      {/* Skip button — always visible and functional on all slides */}
       <TouchableOpacity
         style={styles.skipButton}
         onPress={dismissOnboarding}
@@ -105,7 +195,6 @@ export default function OnboardingScreen() {
         <Text style={styles.skipText}>Skip</Text>
       </TouchableOpacity>
 
-      {/* Slides rendered in a horizontal paging ScrollView */}
       <ScrollView
         ref={scrollRef}
         horizontal
@@ -116,12 +205,18 @@ export default function OnboardingScreen() {
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
       >
-        {SLIDES.map((slide) => (
-          <SlideItem key={slide.id} slide={slide} />
+        {SLIDES.map((slide, index) => (
+          <SlideItem
+            key={slide.id}
+            slide={slide}
+            isLast={index === SLIDES.length - 1}
+            timeReady={timeReady}
+            selectedTime={selectedTime}
+            onTimeChange={handleTimeChange}
+          />
         ))}
       </ScrollView>
 
-      {/* Pagination dots */}
       <View style={styles.dotsRow}>
         {SLIDES.map((_, i) => (
           <View
@@ -131,25 +226,91 @@ export default function OnboardingScreen() {
         ))}
       </View>
 
-      {/* Primary action button */}
       <View style={[styles.buttonContainer, { paddingBottom: bottomPadding + 24 }]}>
-        <TouchableOpacity
-          style={styles.primaryButton}
-          onPress={goToNext}
-          activeOpacity={0.85}
-          accessibilityLabel={isLastSlide ? "Get Started" : "Next"}
-          testID={isLastSlide ? "get-started-button" : "next-button"}
-        >
-          <Text style={styles.primaryButtonText}>
-            {isLastSlide ? "Get Started" : "Next"}
-          </Text>
-        </TouchableOpacity>
+        {isLastSlide ? (
+          <>
+            {Platform.OS === "ios" && timeReady && (
+              <View style={styles.iosPickerCard}>
+                <DateTimePicker
+                  mode="time"
+                  display="spinner"
+                  value={selectedTime}
+                  onChange={handleTimeChange}
+                  textColor={Colors.textPrimary}
+                  themeVariant="dark"
+                />
+                <View style={styles.iosPickerActions}>
+                  <TouchableOpacity style={styles.secondaryButton} onPress={finishOnboarding} activeOpacity={0.85}>
+                    <Text style={styles.secondaryButtonText}>Maybe Later</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.primaryButtonHalf} onPress={handleIosDone} activeOpacity={0.85}>
+                    <Text style={styles.primaryButtonText}>Set Reminder</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            )}
+
+            <Text style={styles.helperText}>You can change this anytime in Settings.</Text>
+            {!timeReady && (
+              <>
+                <TouchableOpacity
+                  style={[styles.primaryButton, reminderBusy && styles.buttonDisabled]}
+                  onPress={enableReminder}
+                  activeOpacity={0.85}
+                  accessibilityLabel="Enable Reminder"
+                  disabled={reminderBusy}
+                >
+                  <Text style={styles.primaryButtonText}>{reminderBusy ? "Preparing" : "Enable Reminder"}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.secondaryButton}
+                  onPress={finishOnboarding}
+                  activeOpacity={0.85}
+                  accessibilityLabel="Maybe Later"
+                >
+                  <Text style={styles.secondaryButtonText}>Maybe Later</Text>
+                </TouchableOpacity>
+              </>
+            )}
+          </>
+        ) : (
+          <TouchableOpacity
+            style={styles.primaryButton}
+            onPress={goToNext}
+            activeOpacity={0.85}
+            accessibilityLabel="Next"
+            testID="next-button"
+          >
+            <Text style={styles.primaryButtonText}>Next</Text>
+          </TouchableOpacity>
+        )}
       </View>
+
+      {showTimePicker && Platform.OS === "android" && (
+        <DateTimePicker
+          mode="time"
+          display="default"
+          value={selectedTime}
+          onChange={handleTimeChange}
+        />
+      )}
     </View>
   );
 }
 
-function SlideItem({ slide }: { slide: Slide }) {
+function SlideItem({
+  slide,
+  isLast,
+  timeReady,
+  selectedTime,
+  onTimeChange,
+}: {
+  slide: Slide;
+  isLast: boolean;
+  timeReady: boolean;
+  selectedTime: Date;
+  onTimeChange: (event: DateTimePickerEvent, date?: Date) => void;
+}) {
   return (
     <View style={styles.slide}>
       <View style={styles.iconWrapper}>
@@ -157,6 +318,9 @@ function SlideItem({ slide }: { slide: Slide }) {
       </View>
       <Text style={styles.title}>{slide.title}</Text>
       <Text style={styles.subtitle}>{slide.subtitle}</Text>
+      {isLast && timeReady && Platform.OS === "ios" && (
+        <Text style={styles.previewText}>Reminder time: {formatReminderTime(selectedTime.getHours(), selectedTime.getMinutes())}</Text>
+      )}
     </View>
   );
 }
@@ -214,6 +378,13 @@ const styles = StyleSheet.create({
     color: Colors.textSecondary,
     textAlign: "center",
     lineHeight: 24,
+    maxWidth: 340,
+  },
+  previewText: {
+    marginTop: 18,
+    fontSize: 13,
+    fontFamily: "Inter_500Medium",
+    color: Colors.textMuted,
   },
   dotsRow: {
     flexDirection: "row",
@@ -236,8 +407,16 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     paddingHorizontal: 24,
+    gap: 10,
   },
   primaryButton: {
+    backgroundColor: Colors.amber,
+    borderRadius: 14,
+    paddingVertical: 16,
+    alignItems: "center",
+  },
+  primaryButtonHalf: {
+    flex: 1,
     backgroundColor: Colors.amber,
     borderRadius: 14,
     paddingVertical: 16,
@@ -248,5 +427,40 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "Inter_700Bold",
     letterSpacing: 0.2,
+  },
+  secondaryButton: {
+    borderRadius: 14,
+    paddingVertical: 16,
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: Colors.border,
+    backgroundColor: Colors.surface,
+  },
+  secondaryButtonText: {
+    color: Colors.textSecondary,
+    fontSize: 16,
+    fontFamily: "Inter_600SemiBold",
+  },
+  helperText: {
+    textAlign: "center",
+    color: Colors.textMuted,
+    fontSize: 13,
+    fontFamily: "Inter_400Regular",
+  },
+  buttonDisabled: {
+    opacity: 0.8,
+  },
+  iosPickerCard: {
+    backgroundColor: Colors.surface,
+    borderRadius: 18,
+    borderWidth: 1,
+    borderColor: Colors.border,
+    padding: 12,
+    marginBottom: 6,
+  },
+  iosPickerActions: {
+    flexDirection: "row",
+    gap: 10,
+    marginTop: 8,
   },
 });
